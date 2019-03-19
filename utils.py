@@ -1,6 +1,6 @@
 #Biblioteca de funcoes uteis
 import math
-import numpy as np
+# import numpy as np
 
 class node():
     def __init__(self,x,y):
@@ -16,7 +16,9 @@ def calcEal(E,A,l):
     return E*A/l
 
 def angle(pointA,pointB):
-    return math.atan2((pointA.y-pointB.y) , (pointA.x-pointB.x))
+    if(pointB.x-pointA.x == 0):
+        return math.pi/2
+    return math.atan((pointB.y-pointA.y) / (pointB.x-pointA.x))
 
 def matrixKe(E,A,l,pointA,pointB):
     eal = calcEal(E,A,l)
@@ -24,9 +26,14 @@ def matrixKe(E,A,l,pointA,pointB):
     s = math.sin(angle(pointA,pointB))
     c = math.cos(angle(pointA,pointB))
 
-    matrix = [[c**2,c*s,-c**2,-c*s],
-            [c*s,s**2,-c*s,-s**2],
-            [-c**2,-c*s,c**2,c*s],
-            [-c*s,-s**2,c*s,s**2]]
+    if (c < 0.00000000001):
+        c = 0
+    if (s < 0.00000000001):
+        s = 0
 
-    return eal * matrix
+    matrix = [[eal*c**2,eal*c*s,-eal*c**2,-eal*c*s],
+            [eal*c*s,eal*s**2,-eal*c*s,-eal*s**2],
+            [-eal*c**2,-eal*c*s,eal*c**2,eal*c*s],
+            [-eal*c*s,-eal*s**2,eal*c*s,eal*s**2]]
+
+    return matrix
