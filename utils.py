@@ -8,6 +8,29 @@ class node():
         self.y = y
         self.freeX = True
         self.freeY = True
+        self.loadX = 0
+        self.loadY = 0
+    
+    def setFreedomX(self,freeX):
+        self.freeX = freeX
+
+    def setFreedomY(self,freeY):
+        self.freeY = freeY
+
+    def setLoadX(self,loadX):
+        self.loadX = loadX
+
+    def setLoadY(self,loadY):
+        self.loadY = loadY
+    
+    def printProperties(self):
+        print(self.x)
+        print(self.y )
+        print(self.freeX)
+        print(self.freeY)
+        print(self.loadX)
+        print(self.loadY)
+
 
 def barLength(pointA,pointB):
     return math.sqrt((pointA.x - pointB.x)**2 + (pointA.y-pointB.y)**2)
