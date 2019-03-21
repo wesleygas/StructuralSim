@@ -11,3 +11,12 @@ class Barra():
         self.angle = utils.angle(p1,p2)
         self.strain = strain
         self.stress = stress 
+
+    def print_properties(self):
+        print()
+        print(self.length)
+        print(self.cs_area)
+        print(self.E_modulus)
+        print(self.angle)
+        print(self.strain)
+        print(self.stress)
