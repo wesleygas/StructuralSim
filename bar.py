@@ -13,10 +13,10 @@ class Barra():
         self.stress = stress 
 
     def print_properties(self):
-        print()
-        print(self.length)
-        print(self.cs_area)
-        print(self.E_modulus)
-        print(self.angle)
-        print(self.strain)
-        print(self.stress)
+        print("name:     ",self.name)
+        print("length:   ",self.length)
+        print("cs_area:  ",self.cs_area)
+        print("e_modulus:",self.E_modulus)
+        print("angulo:   ",self.angle)
+        print("strain:   ",self.strain)
+        print("stress:   ",self.stress)

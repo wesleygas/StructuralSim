@@ -1,7 +1,6 @@
 from utils import node
 from bar import Barra
 
-
 #Codigo para o parseamento dos dados de input
 def get_data(filename="input_file.txt"):
 	with open(filename) as file: # Use file to refer to the file object
@@ -19,17 +18,18 @@ def e_to_float (str_num):
 	return num
 
 def join_bars(input_dict, group_to_bar):
+	
 	list_bars = []
 	dict_bars = {}
-	for bar in group_to_bar:
-		# group_to_bar[bar]
-		nome = group_to_bar[bar]
+	for bar_name in group_to_bar:
+		nome = bar_name
+		group = group_to_bar[bar_name]
 		p1 = input_dict["COORDINATES"][input_dict["INCIDENCES"][nome][0]]
 		p2 = input_dict["COORDINATES"][input_dict["INCIDENCES"][nome][1]]
-		E_modulus = e_to_float(input_dict["ELEMENT_GROUPS"][nome]["E_MODULUS"])
-		strain = e_to_float(input_dict["ELEMENT_GROUPS"][nome]["TR_ADM"])
-		stress = e_to_float(input_dict["ELEMENT_GROUPS"][nome]["COM_ADM"])
-		cs_area = e_to_float(input_dict["ELEMENT_GROUPS"][nome]["AREA"])
+		E_modulus = e_to_float(input_dict["ELEMENT_GROUPS"][group]["E_MODULUS"])
+		strain = e_to_float(input_dict["ELEMENT_GROUPS"][group]["TR_ADM"])
+		stress = e_to_float(input_dict["ELEMENT_GROUPS"][group]["COM_ADM"])
+		cs_area = e_to_float(input_dict["ELEMENT_GROUPS"][group]["AREA"])
 
 		bar =  Barra(nome, p1, p2, E_modulus, strain, stress, cs_area)
 		dict_bars[nome] = bar
@@ -47,7 +47,6 @@ def data_parse(data):
 	group_to_bar = {}
 	x = 0
 	while x < len(data):
-		# print(data[x])
 		if(data[x][0] =="*"):
 			command = data[x][1:]
 			
@@ -131,7 +130,3 @@ def data_parse(data):
 					
 		x+=1
 	return input_dict, group_to_bar
-
-# data = get_data()
-# bars = join_bars(*data_parse(data))
-# print(bars)
