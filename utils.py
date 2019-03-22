@@ -3,7 +3,8 @@ import math
 # import numpy as np
 
 class node():
-    def __init__(self,x,y):
+    def __init__(self,name, x,y):
+        self.name = name
         self.x = x
         self.y = y
         self.freeX = True

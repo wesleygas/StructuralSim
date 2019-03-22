@@ -55,7 +55,7 @@ def data_parse(data):
 				qnt = int(data[x+1])
 				for cord in (data[(x+2):(x+2+qnt)]):
 					cord_split = cord.split(" ")
-					input_dict["COORDINATES"][int(cord_split[0])] = node(float(cord_split[1]),float(cord_split[2]))
+					input_dict["COORDINATES"][int(cord_split[0])] = node(int(cord_split[0]),float(cord_split[1]),float(cord_split[2]))
 
 
 			elif(command == "ELEMENT_GROUPS" ):
