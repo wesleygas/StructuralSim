@@ -47,6 +47,7 @@ def angle(pointA,pointB):
 def matrixKe(E,A,l,pointA,pointB):
     eal = calcEal(E,A,l)
 
+
     s = math.sin(angle(pointA,pointB))
     c = math.cos(angle(pointA,pointB))
 
@@ -62,16 +63,34 @@ def matrixKe(E,A,l,pointA,pointB):
 
     return matrix
 
+def matrizGZero(n):
+    matrix = []
+    for _ in range(2*n):
+        matrix.append([0]*(2*n))
+
+    return matrix
+
 def matrixG(bars,len_nodes):
-    g_matrix = [[0]*2*len_nodes]*2*len_nodes
+    g_matrix = matrizGZero(len_nodes)
+    cut_matrix = []
+    free_list = []
     for bar in bars:
         p1_y = ((bars[bar].p1.name)*2) -1 #Valor do indice impar ou seja X menor da barra
         p1_x = p1_y-1 #Valor do indice impar ou seja X menor da barra
         p2_y = ((bars[bar].p2.name)*2) -1 #Valor do indice impar ou seja X menor da barra
         p2_x = p2_y-1 #Valor do indice impar ou seja X menor da barra
-        
-        print(p1_x,p1_y,p2_x,p2_y)
 
+        #adicionando os graus de liberdade livres na lista
+        if(bars[bar].p1.freeY and (p1_y not in free_list)):
+            free_list.append(p1_y)
+        if(bars[bar].p1.freeX and (p1_x not in free_list)):
+            free_list.append(p1_x)
+        if(bars[bar].p2.freeY and (p2_y not in free_list)):
+            free_list.append(p2_y)
+        if(bars[bar].p2.freeX and (p2_x not in free_list)):
+            free_list.append(p2_x)
+       
+        # print(p1_x,p1_y,p2_x,p2_y)
         matrix_bar = bars[bar].matrix_ke
 
         g_matrix[p1_x][p1_x] += matrix_bar[0][0]
@@ -93,12 +112,16 @@ def matrixG(bars,len_nodes):
         g_matrix[p2_y][p1_y] += matrix_bar[3][1]
         g_matrix[p2_y][p2_x] += matrix_bar[3][2]
         g_matrix[p2_y][p2_y] += matrix_bar[3][3]
-    # print(g_matrix)
-        # if (bars[bar].p1.freeX):
-        #     bars[bar].matrix_ke[((bars[bar].p1.name)*2)-2]
-        # if (bars[bar].p1.freeY):
-        #     pass
-        # if (bars[bar].p2.freeX):
-        #     pass
-        # if (bars[bar].p2.freeY):
-        #     pass
+        
+    for i in range(2*len_nodes):
+        line = []
+        for j in range(2*len_nodes):
+            if(i in free_list and j in free_list):
+                line.append(g_matrix[i][j])
+        if(len(line)>0):
+            cut_matrix.append(line)
+
+    return cut_matrix, free_list
+
+
+    
