@@ -121,7 +121,7 @@ def matrixG(bars,len_nodes):
         if(len(line)>0):
             cut_matrix.append(line)
 
-    return cut_matrix, free_list
+    return g_matrix,cut_matrix, free_list
 
 
     

@@ -7,8 +7,8 @@ data = di.get_data("input_file.txt")
 list_bars, dict_bars = di.join_bars(*di.data_parse(data))
 
 # global matrix and degrees of freedom list
-matriz_g, free_list = utils.matrixG(dict_bars,len(di.data_parse(data)[0]["COORDINATES"]))
-print('\n'.join(map(str, matriz_g)))
+matrix_g, matrix_cut, free_list = utils.matrixG(dict_bars,len(di.data_parse(data)[0]["COORDINATES"]))
+print('\n'.join(map(str, matrix_cut)))
 
 
 # print(len(di.data_parse(data)[0]["COORDINATES"]))
