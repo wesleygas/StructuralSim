@@ -10,7 +10,8 @@ class Barra():
         self.E_modulus = E_modulus
         self.angle = utils.angle(p1,p2)
         self.strain = strain
-        self.stress = stress 
+        self.stress = stress
+        self.matrix_ke = utils.matrixKe(E_modulus,cs_area,self.length,p1,p2)
 
     def print_properties(self):
         print("name:     ",self.name)

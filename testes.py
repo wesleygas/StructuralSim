@@ -1,8 +1,8 @@
 from utils import *
 
-pontoA = node(0,0)
-pontoB = node(0,0.4)
-pontoC = node(0.3,0.4)
+pontoA = node(1,0,0)
+pontoB = node(2,0,0.4)
+pontoC = node(3,0.3,0.4)
 
 
 c1 = barLength(pontoA,pontoB)
