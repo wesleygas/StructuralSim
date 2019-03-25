@@ -47,7 +47,7 @@ def data_parse(data):
 	group_to_bar = {}
 	x = 0
 	while x < len(data):
-		if(data[x][0] =="*"):
+		if(len(data[x])>0 and data[x][0] =="*"):
 			command = data[x][1:]
 			
 			if(command == "COORDINATES" ):
