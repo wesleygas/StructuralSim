@@ -12,7 +12,12 @@ class node():
         self.freeY = True
         self.loadX = 0
         self.loadY = 0
+        self.deslX = 0
+        self.deslY = 0
 
+    def defineDesl(self,x,y):
+        self.deslX = x
+        self.deslY = y
     def setFreedomX(self, freeX):
         self.freeX = freeX
 

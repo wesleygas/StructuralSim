@@ -2,6 +2,7 @@ import utils
 import bar
 import dataIngest as di
 import numpy as np
+import math
 
 
 data = di.get_data("input_file.txt")
@@ -18,5 +19,22 @@ dis_matrix_g = utils.expandDisplacementMatrix(free_dict,dis_matrix_cut, len(matr
 
 complete_load_list = np.dot(matrix_g, dis_matrix_g)
 
+print(dis_matrix_g)
+print("us")
+for barra in list_bars:
+    us = []
 
+    s = math.sin(barra.angle)
+    c = math.cos(barra.angle)
+    matrixCoef = [-c,-s,c,s]
+
+    us.append(dis_matrix_g[((barra.p1.name)*2)-2])
+    us.append(dis_matrix_g[((barra.p1.name)*2)-1])
+    us.append(dis_matrix_g[((barra.p2.name)*2)-2])
+    us.append(dis_matrix_g[((barra.p1.name)*2)-1])
+    
+    barra.strain = np.dot(matrixCoef,us))
+    
+
+    # print(us)
 ##Reações de apoio 
