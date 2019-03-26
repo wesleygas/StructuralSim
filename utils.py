@@ -112,7 +112,7 @@ def matrixG(bars, len_nodes):
         g_matrix[p1_y][p2_y] += matrix_bar[1][3]
 
         g_matrix[p2_x][p1_x] += matrix_bar[2][0]
-        g_matrix[p2_x][p1_y] += matrix_bar[2][1
+        g_matrix[p2_x][p1_y] += matrix_bar[2][1]
         g_matrix[p2_x][p2_x] += matrix_bar[2][2]
         g_matrix[p2_x][p2_y] += matrix_bar[2][3]
 
