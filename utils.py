@@ -1,6 +1,6 @@
 # Biblioteca de funcoes uteis
 import math
-# import numpy as np
+import numpy as np
 
 
 class node():
@@ -112,7 +112,7 @@ def matrixG(bars, len_nodes):
         g_matrix[p1_y][p2_y] += matrix_bar[1][3]
 
         g_matrix[p2_x][p1_x] += matrix_bar[2][0]
-        g_matrix[p2_x][p1_y] += matrix_bar[2][1
+        g_matrix[p2_x][p1_y] += matrix_bar[2][1]
         g_matrix[p2_x][p2_x] += matrix_bar[2][2]
         g_matrix[p2_x][p2_y] += matrix_bar[2][3]
 
@@ -149,16 +149,17 @@ def gauss_helps(rig,desl,loads):
 ##
 #
 # rig - Matriz de rigidez
-# desl - Matriz de deslocamento
 # loads - Matriz de cargas
 # i_max - Numero máximo de iteracoes
 # tolerance - tolerancia... daaa
 #
+# Returns: desl - Matriz de deslocamento nodal (unidimensional de mesmo tamanho que a matrix de cargas)
 ##
-def gauss_rules(rig, desl, loads, i_max, tolerance):
+def gauss_rules(rig, loads, i_max, tolerance):
+    desl = np.ones(len(loads))
     if((len(rig) != len(loads)) or len(rig[0]) != len(desl)):
         print("MATRIZES DE TAMANHOS INCOMPATIVEIS!")
-        return
+        return -1
     desl = gauss_helps(rig,desl,loads)
     p_desl = np.array(desl)
     
@@ -168,7 +169,7 @@ def gauss_rules(rig, desl, loads, i_max, tolerance):
         delta = np.abs((desl - p_desl)/desl)
         if(np.max(delta) < tolerance):
             print("Tolerancia aceita na iteracao " + str(i))
-            return
+            return desl
         p_desl = np.array(desl)
         i+= 1
-    return 
+    return desl
