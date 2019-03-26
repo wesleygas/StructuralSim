@@ -134,7 +134,7 @@ def matrixG(bars, len_nodes):
         if(len(line) > 0):
             cut_matrix.append(line)
 
-    return g_matrix, cut_matrix, force_list
+    return g_matrix, cut_matrix, force_list, free_dict
 
 def gauss_helps(rig,desl,loads):
     for i in range(len(desl)):
@@ -173,3 +173,11 @@ def gauss_rules(rig, loads, i_max, tolerance):
         p_desl = np.array(desl)
         i+= 1
     return desl
+
+def expandDisplacementMatrix(free_dict, input_matrix, size):
+    output_matrix = np.zeros(size)
+    i = 0
+    for key in sorted(free_dict.keys()):
+        output_matrix[key] = input_matrix[i]
+        i+=1
+    return output_matrix
