@@ -32,8 +32,9 @@ for barra in list_bars:
     us.append(dis_matrix_g[((barra.p1.name)*2)-1])
     us.append(dis_matrix_g[((barra.p2.name)*2)-2])
     us.append(dis_matrix_g[((barra.p1.name)*2)-1])
-    
-    barra.strain = np.dot(matrixCoef,us))
+    mult = np.dot(matrixCoef,us)
+    barra.strain = (1/(barra.length))*mult
+    barra.stress = (barra.E_modulus/(barra.length))*mult
     
 
     # print(us)
