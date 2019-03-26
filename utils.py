@@ -112,7 +112,7 @@ def matrixG(bars, len_nodes):
         g_matrix[p1_y][p2_y] += matrix_bar[1][3]
 
         g_matrix[p2_x][p1_x] += matrix_bar[2][0]
-        g_matrix[p2_x][p1_y] += matrix_bar[2][1]
+        g_matrix[p2_x][p1_y] += matrix_bar[2][1
         g_matrix[p2_x][p2_x] += matrix_bar[2][2]
         g_matrix[p2_x][p2_y] += matrix_bar[2][3]
 
@@ -135,3 +135,40 @@ def matrixG(bars, len_nodes):
             cut_matrix.append(line)
 
     return g_matrix, cut_matrix, force_list
+
+def gauss_helps(rig,desl,loads):
+    for i in range(len(desl)):
+        desl[i] = loads[i]
+        for j in range(len(desl)):
+            if(j != i):
+                desl[i] -= rig[i][j]*desl[j]
+        desl[i] /= rig[i][i]
+        
+    return desl
+
+##
+#
+# rig - Matriz de rigidez
+# desl - Matriz de deslocamento
+# loads - Matriz de cargas
+# i_max - Numero máximo de iteracoes
+# tolerance - tolerancia... daaa
+#
+##
+def gauss_rules(rig, desl, loads, i_max, tolerance):
+    if((len(rig) != len(loads)) or len(rig[0]) != len(desl)):
+        print("MATRIZES DE TAMANHOS INCOMPATIVEIS!")
+        return
+    desl = gauss_helps(rig,desl,loads)
+    p_desl = np.array(desl)
+    
+    i = 1
+    while(i < i_max):
+        desl = gauss_helps(rig, desl, loads)
+        delta = np.abs((desl - p_desl)/desl)
+        if(np.max(delta) < tolerance):
+            print("Tolerancia aceita na iteracao " + str(i))
+            return
+        p_desl = np.array(desl)
+        i+= 1
+    return 
