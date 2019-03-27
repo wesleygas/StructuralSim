@@ -13,7 +13,7 @@ matrix_g, matrix_cut, force_list, free_dict = utils.matrixG(dict_bars,len(di.dat
 
 #print('\n'.join(map(str, matrix_cut)))
 #print(force_list)
-dis_matrix_cut = utils.gauss_rules(matrix_cut,force_list, 10e4, 10e-16)
+dis_matrix_cut = utils.gauss_rules(matrix_cut,force_list, 10e2, 10e-32)
 
 dis_matrix_g = utils.expandDisplacementMatrix(free_dict,dis_matrix_cut, len(matrix_g))
 
@@ -27,14 +27,17 @@ for barra in list_bars:
     s = math.sin(barra.angle)
     c = math.cos(barra.angle)
     matrixCoef = [-c,-s,c,s]
+    
+    us = [dis_matrix_g[((barra.p1.name)*2)-2],
+          dis_matrix_g[((barra.p1.name)*2)-2],
+          dis_matrix_g[((barra.p2.name)*2)-2],
+          dis_matrix_g[((barra.p1.name)*2)-1]]
 
-    us.append(dis_matrix_g[((barra.p1.name)*2)-2])
-    us.append(dis_matrix_g[((barra.p1.name)*2)-1])
-    us.append(dis_matrix_g[((barra.p2.name)*2)-2])
-    us.append(dis_matrix_g[((barra.p1.name)*2)-1])
     mult = np.dot(matrixCoef,us)
     barra.strain = (1/(barra.length))*mult
     barra.stress = (barra.E_modulus/(barra.length))*mult
+
+    print(barra.stress)
     
 
     # print(us)
