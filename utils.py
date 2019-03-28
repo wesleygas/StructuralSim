@@ -208,18 +208,18 @@ def write_exit(us,nodes,forces,list_bars):
             exit.write("    {0} FY = {1}\n".format(nodes[node].name,forces[counter]))
             counter += 1
     
-    exit.write("\nELEMENT_STRAINS\n")
+    exit.write("\n*ELEMENT_STRAINS\n")
 
     counter = 1
     for bar in list_bars:
         exit.write("    {0} {1}\n".format(counter,bar.strain))
         counter += 1
 
-    exit.write("\nELEMENT_STRESSES\n")
+    exit.write("\n*ELEMENT_STRESSES\n")
 
     counter = 1
     for bar in list_bars:
         exit.write("    {0} {1}\n".format(counter,bar.stress))
         counter += 1
-        
+
     exit.close()
