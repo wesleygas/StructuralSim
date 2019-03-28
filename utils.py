@@ -163,7 +163,6 @@ def gauss_helps(rig,desl,loads):
 def gauss_rules(rig, loads, i_max, tolerance):
     desl = np.ones(len(loads))
     if((len(rig) != len(loads)) or len(rig[0]) != len(desl)):
-        print("MATRIZES DE TAMANHOS INCOMPATIVEIS!")
         return -1
     desl = gauss_helps(rig,desl,loads)
     p_desl = np.array(desl)
@@ -173,7 +172,6 @@ def gauss_rules(rig, loads, i_max, tolerance):
         desl = gauss_helps(rig, desl, loads)
         delta = np.abs((desl - p_desl)/desl)
         if(np.max(delta) < tolerance):
-            print("Tolerancia aceita na iteracao " + str(i))
             return desl
         p_desl = np.array(desl)
         i+= 1
@@ -186,3 +184,42 @@ def expandDisplacementMatrix(free_dict, input_matrix, size):
         output_matrix[key] = input_matrix[i]
         i+=1
     return output_matrix
+
+def write_exit(us,nodes,forces,list_bars):
+    exit = open("saida.txt","w")
+
+    exit.write("*DISPLACEMENTS\n")
+    
+    counter = 1
+    pointer = 0
+    while counter <= len(us)/2:
+        exit.write("    {0} {1} {2}\n".format(counter,us[pointer],us[pointer+1]))
+        counter += 1
+        pointer += 2
+        
+    exit.write("\n*REACTION FORCES\n")
+    
+    counter = 0
+    for node in nodes:
+        if (not nodes[node].freeX):   
+            exit.write("    {0} FX = {1}\n".format(nodes[node].name,forces[counter]))
+            counter += 1
+        if (not nodes[node].freeY):   
+            exit.write("    {0} FY = {1}\n".format(nodes[node].name,forces[counter]))
+            counter += 1
+    
+    exit.write("\nELEMENT_STRAINS\n")
+
+    counter = 1
+    for bar in list_bars:
+        exit.write("    {0} {1}\n".format(counter,bar.strain))
+        counter += 1
+
+    exit.write("\nELEMENT_STRESSES\n")
+
+    counter = 1
+    for bar in list_bars:
+        exit.write("    {0} {1}\n".format(counter,bar.stress))
+        counter += 1
+        
+    exit.close()
