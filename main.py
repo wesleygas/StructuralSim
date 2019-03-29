@@ -5,7 +5,7 @@ import numpy as np
 import math
 
 
-data = di.get_data("input_file.txt")
+data = di.get_data("ENTRADA.txt")
 list_bars, dict_bars = di.join_bars(*di.data_parse(data))
 
 # global matrix and degrees of freedom list
@@ -13,7 +13,7 @@ matrix_g, matrix_cut, force_list, free_dict = utils.matrixG(dict_bars,len(di.dat
 
 #print('\n'.join(map(str, matrix_cut)))
 #print(force_list)
-dis_matrix_cut = utils.gauss_rules(matrix_cut,force_list, 10e2, 10e-32)
+dis_matrix_cut = utils.gauss_rules(matrix_cut,force_list, 10e2, 10e-16)
 
 dis_matrix_g = utils.expandDisplacementMatrix(free_dict,dis_matrix_cut, len(matrix_g))
 
