@@ -170,7 +170,12 @@ def gauss_rules(rig, loads, i_max, tolerance):
     i = 1
     while(i < i_max):
         desl = gauss_helps(rig, desl, loads)
-        delta = np.abs((desl - p_desl)/desl)
+        delta = np.zeros(len(desl))
+        for e in range(len(desl)):
+            if(desl[e] == 0 and p_desl[e] == 0):
+                delta[e] = 0
+            else:
+                delta[e] = 2*(desl[e]-p_desl[e])/(np.abs(desl[e]) + np.abs(p_desl[e]))
         if(np.max(delta) < tolerance):
             return desl
         p_desl = np.array(desl)
