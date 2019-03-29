@@ -203,10 +203,10 @@ def write_exit(us,nodes,forces,list_bars):
     for node in nodes:
         if (not nodes[node].freeX):   
             exit.write("    {0} FX = {1}\n".format(nodes[node].name,forces[counter]))
-            counter += 1
+        counter += 1
         if (not nodes[node].freeY):   
             exit.write("    {0} FY = {1}\n".format(nodes[node].name,forces[counter]))
-            counter += 1
+        counter += 1
     
     exit.write("\n*ELEMENT_STRAINS\n")
 

@@ -42,4 +42,6 @@ for barra in list_bars:
 
 nodes = node_data[0]["COORDINATES"]
 
-utils.write_exit(dis_matrix_g,nodes,force_list,list_bars)
+utils.write_exit(dis_matrix_g,nodes,complete_load_list,list_bars)
+
+print("Verifique o arquivo de saída:\nsaida.txt")
