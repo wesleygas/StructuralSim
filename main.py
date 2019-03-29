@@ -4,8 +4,8 @@ import dataIngest as di
 import numpy as np
 import math
 
-
-data = di.get_data("input_file.txt")
+entrada = input("Nome do arquivo de entrada: ")
+data = di.get_data(entrada)
 node_data = di.data_parse(data)
 list_bars, dict_bars = di.join_bars(*node_data)
 
@@ -45,4 +45,4 @@ nodes = node_data[0]["COORDINATES"]
 
 utils.write_exit(dis_matrix_g,nodes,np.around(complete_load_list, decimals = 5),list_bars)
 
-print("Verifique o arquivo de saída:\nsaida.txt")
+print("\n\nVerifique o arquivo de saída:\nsaida.txt")
