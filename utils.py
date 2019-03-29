@@ -56,13 +56,13 @@ def angle(pointA, pointB):
 def matrixKe(E, A, l, pointA, pointB):
     eal = calcEal(E, A, l)
 
-    s = math.sin(angle(pointA, pointB))
-    c = math.cos(angle(pointA, pointB))
+    c = (pointB.x - pointA.x)/l
+    s = (pointB.y - pointA.y)/l
 
-    if (c < 0.00000000001):
-        c = 0
-    if (s < 0.00000000001):
-        s = 0
+    # if (c < 0.00000000001):
+    #     c = 0
+    # if (s < 0.00000000001):
+    #     s = 0
 
     matrix = [[eal*c**2, eal*c*s, -eal*c**2, -eal*c*s],
               [eal*c*s, eal*s**2, -eal*c*s, -eal*s**2],
@@ -105,7 +105,9 @@ def matrixG(bars, len_nodes):
 
         # print(p1_x,p1_y,p2_x,p2_y)
         matrix_bar = bars[bar].matrix_ke
-
+        if(p1_y ==3 or p2_y ==3):
+            print(matrix_bar)
+            print("\n\n\n")
         g_matrix[p1_x][p1_x] += matrix_bar[0][0]
         g_matrix[p1_x][p1_y] += matrix_bar[0][1]
         g_matrix[p1_x][p2_x] += matrix_bar[0][2]
@@ -126,16 +128,17 @@ def matrixG(bars, len_nodes):
         g_matrix[p2_y][p2_x] += matrix_bar[3][2]
         g_matrix[p2_y][p2_y] += matrix_bar[3][3]
     
-
     for i in range(2*len_nodes):
         line = []
         for j in range(2*len_nodes):
-            if(i in free_dict and j in free_dict):
+
+            if((i in free_dict.keys()) and (j in free_dict.keys())):
+
                 line.append(g_matrix[i][j])
-        
+
         if(i in free_dict):
             force_list.append(free_dict[i])
-            
+        
         if(len(line) > 0):
             cut_matrix.append(line)
 

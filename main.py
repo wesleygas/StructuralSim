@@ -17,24 +17,25 @@ dis_matrix_cut = utils.gauss_rules(matrix_cut,force_list, 10e2, 10e-32)
 dis_matrix_g = utils.expandDisplacementMatrix(free_dict,dis_matrix_cut, len(matrix_g))
 
 complete_load_list = np.dot(matrix_g, dis_matrix_g)
+# print(matrix_g, "\n\n\n\n")
+print("-----global")
+for lis in matrix_g:
+    print(lis)
+print("\n\n")
+print(matrix_cut)
 
 for barra in list_bars:
     us = []
 
-    s = math.sin(barra.angle)
-    c = math.cos(barra.angle)
-
-    if (c < 0.00000000001):
-        c = 0
-    if (s < 0.00000000001):
-        s = 0
+    c = (barra.p2.x - barra.p1.x)/barra.length
+    s = (barra.p2.y - barra.p1.y)/barra.length
 
     matrixCoef = [-c,-s,c,s]
     
     us = [dis_matrix_g[((barra.p1.name)*2)-2],
-          dis_matrix_g[((barra.p1.name)*2)-2],
+          dis_matrix_g[((barra.p1.name)*2)-1],
           dis_matrix_g[((barra.p2.name)*2)-2],
-          dis_matrix_g[((barra.p1.name)*2)-1]]
+          dis_matrix_g[((barra.p2.name)*2)-1]]
 
     mult = np.dot(matrixCoef,us)
     barra.strain = (1/(barra.length))*mult
