@@ -5,7 +5,7 @@ import numpy as np
 import math
 
 entrada = input("Nome do arquivo de entrada: ")
-data = di.get_data(entrada)
+data = di.get_data(entrada+".txt")
 node_data = di.data_parse(data)
 list_bars, dict_bars = di.join_bars(*node_data)
 
