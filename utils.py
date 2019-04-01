@@ -44,7 +44,7 @@ def barLength(pointA, pointB):
 
 
 def calcEal(E, A, l):
-    return E*A/l
+    return (E*A)/l
 
 
 def angle(pointA, pointB):
@@ -56,20 +56,15 @@ def angle(pointA, pointB):
 def matrixKe(E, A, l, pointA, pointB):
     eal = calcEal(E, A, l)
 
-    c = (pointB.x - pointA.x)/l
-    s = (pointB.y - pointA.y)/l
+    c = (pointB.x - pointA.x)/float(l)
+    s = (pointB.y - pointA.y)/float(l)
 
-    # if (c < 0.00000000001):
-    #     c = 0
-    # if (s < 0.00000000001):
-    #     s = 0
+    matrix = np.array([[c**2, c*s, -c**2, -c*s],
+              [c*s, s**2, -c*s, -s**2],
+              [-c**2, -c*s, c**2, c*s],
+              [-c*s, -s**2, c*s, s**2]])
 
-    matrix = [[eal*c**2, eal*c*s, -eal*c**2, -eal*c*s],
-              [eal*c*s, eal*s**2, -eal*c*s, -eal*s**2],
-              [-eal*c**2, -eal*c*s, eal*c**2, eal*c*s],
-              [-eal*c*s, -eal*s**2, eal*c*s, eal*s**2]]
-
-    return matrix
+    return matrix*eal
 
 
 def matrizGZero(n):
@@ -105,9 +100,9 @@ def matrixG(bars, len_nodes):
 
         # print(p1_x,p1_y,p2_x,p2_y)
         matrix_bar = bars[bar].matrix_ke
-        if(p1_y ==3 or p2_y ==3):
-            print(matrix_bar)
-            print("\n\n\n")
+        # if(p1_y ==3 or p2_y ==3):
+        #     print(matrix_bar)
+        #     print("\n\n\n")
         g_matrix[p1_x][p1_x] += matrix_bar[0][0]
         g_matrix[p1_x][p1_y] += matrix_bar[0][1]
         g_matrix[p1_x][p2_x] += matrix_bar[0][2]
@@ -131,9 +126,7 @@ def matrixG(bars, len_nodes):
     for i in range(2*len_nodes):
         line = []
         for j in range(2*len_nodes):
-
             if((i in free_dict.keys()) and (j in free_dict.keys())):
-
                 line.append(g_matrix[i][j])
 
         if(i in free_dict):
@@ -179,7 +172,7 @@ def gauss_rules(rig, loads, i_max, tolerance):
                 delta[e] = 0
             else:
                 delta[e] = 2*(desl[e]-p_desl[e])/(np.abs(desl[e]) + np.abs(p_desl[e]))
-        if(np.max(delta) < tolerance):
+        if(np.abs(np.max(delta)) < tolerance):
             return desl
         p_desl = np.array(desl)
         i+= 1

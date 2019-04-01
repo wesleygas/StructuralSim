@@ -12,17 +12,11 @@ list_bars, dict_bars = di.join_bars(*node_data)
 # global matrix and degrees of freedom list
 matrix_g, matrix_cut, force_list, free_dict = utils.matrixG(dict_bars,len(node_data[0]["COORDINATES"]))
 
-dis_matrix_cut = utils.gauss_rules(matrix_cut,force_list, 10e2, 10e-32)
+dis_matrix_cut = utils.gauss_rules(matrix_cut,force_list, 10e5, 10e-31)
 
 dis_matrix_g = utils.expandDisplacementMatrix(free_dict,dis_matrix_cut, len(matrix_g))
 
 complete_load_list = np.dot(matrix_g, dis_matrix_g)
-# print(matrix_g, "\n\n\n\n")
-print("-----global")
-for lis in matrix_g:
-    print(lis)
-print("\n\n")
-print(matrix_cut)
 
 for barra in list_bars:
     us = []

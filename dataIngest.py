@@ -14,7 +14,8 @@ def e_to_float (str_num):
 	str_num_list = str_num.split("E")
 	if(len(str_num_list)>1):
 		num = (float(str_num_list[0]))*(10**(float(str_num_list[1])))
-
+	else:
+		num = float(str_num)
 	return num
 
 def join_bars(input_dict, group_to_bar):
