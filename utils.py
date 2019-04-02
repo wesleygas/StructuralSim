@@ -186,6 +186,7 @@ def expandDisplacementMatrix(free_dict, input_matrix, size):
         i+=1
     return output_matrix
 
+
 def write_exit(us,nodes,forces,list_bars):
     exit = open("saida.txt","w")
 
@@ -220,7 +221,6 @@ def write_exit(us,nodes,forces,list_bars):
 
     counter = 1
     for bar in list_bars:
-        exit.write("    {0} {1}\n".format(counter,bar.stress))
+        exit.write(("    {0} {1} "+ bar.get_strain_stress_string() + " " +bar.String_calcIdealDimension(1.2) + "\n").format(counter,bar.stress))
         counter += 1
-
     exit.close()
