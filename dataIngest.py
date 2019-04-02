@@ -28,11 +28,16 @@ def join_bars(input_dict, group_to_bar):
 		p1 = input_dict["COORDINATES"][input_dict["INCIDENCES"][nome][0]]
 		p2 = input_dict["COORDINATES"][input_dict["INCIDENCES"][nome][1]]
 		E_modulus = e_to_float(input_dict["ELEMENT_GROUPS"][group]["E_MODULUS"])
-		strain = e_to_float(input_dict["ELEMENT_GROUPS"][group]["TR_ADM"])
-		stress = e_to_float(input_dict["ELEMENT_GROUPS"][group]["COM_ADM"])
+		strain_max = e_to_float(input_dict["ELEMENT_GROUPS"][group]["TR_ADM"])
+		stress_max = e_to_float(input_dict["ELEMENT_GROUPS"][group]["COM_ADM"])
 		cs_area = e_to_float(input_dict["ELEMENT_GROUPS"][group]["AREA"])
+		if("SEC_FACTOR" in input_dict["ELEMENT_GROUPS"][group] ):
+			safety_factor = input_dict["ELEMENT_GROUPS"][group]["SEC_FACTOR"]
+			
+			strain_max = strain_max/safety_factor
+			stress_max = stress_max/safety_factor	
 
-		bar =  Barra(nome, p1, p2, E_modulus, strain, stress, cs_area)
+		bar =  Barra(nome, p1, p2, E_modulus, strain_max, stress_max, cs_area)
 		dict_bars[nome] = bar
 		list_bars.append(bar)
 
@@ -128,6 +133,12 @@ def data_parse(data):
 						
 					elif(constrain_split[1] == '2'):
 						(input_dict["COORDINATES"][cord_num]).setLoadY(int(constrain_split[2]))
-					
+			elif(command == "SECURITY_FACTOR"):
+				qnt = int(data[x+1])
+				group_num = 1
+				for factor in (data[(x+2):(x+2+qnt)]):
+					input_dict["ELEMENT_GROUPS"][group_num]["SEC_FACTOR"] = e_to_float(factor)
+					group_num +=1
+
 		x+=1
 	return input_dict, group_to_bar
