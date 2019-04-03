@@ -35,5 +35,6 @@ class Barra():
     def String_calcIdealDimension(self):
         if(abs(self.stress) > self.stress_max):
             new_A = abs(self.cs_area*self.stress)/self.stress_max
-            return "Danger! Minimum area needed for safety factor:" +  str(new_A)
-        return " "
+            self.cs_area = new_A
+            return ("Danger! Minimum area needed for safety factor:" +  str(new_A),1)
+        return (" ",0)

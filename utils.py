@@ -218,9 +218,15 @@ def write_exit(us,nodes,forces,list_bars):
         counter += 1
 
     exit.write("\n*ELEMENT_STRESSES\n")
-
+    flag_rerun = 0
     counter = 1
     for bar in list_bars:
-        exit.write(("    {0} {1} "+ bar.get_strain_stress_string() + " " +bar.String_calcIdealDimension() + "\n").format(counter,bar.stress))
+        str_area, flag = bar.String_calcIdealDimension()
+        exit.write(("    {0} {1} "+ bar.get_strain_stress_string() + " " +str_area + "\n").format(counter,bar.stress))
         counter += 1
+
+        if(flag):
+            flag_rerun = 1
+    
     exit.close()
+    return flag_rerun
